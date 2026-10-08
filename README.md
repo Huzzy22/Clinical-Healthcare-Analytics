@@ -408,3 +408,18 @@ Total	100
 4.	Fix one issue at a time, naming each query step so your logic is traceable.
 5.	Close & Load To… → Only Create Connection → Add to Data Model, for each of the four tables.
 6.	Build the Date table, set up relationships, then build your KPI PivotTables before building any charts.
+
+  	Insights, Findings and Recommendations
+
+    Section	Finding / Recommendation
+Finding 1	From the dasboards you can tell that Clinical costs keeps climbing while visit volume drops. The Clinical Overview dashboard shows monthly clinical cost trending upwards toward roughly $90,000+ near the end of the period (from a low near $63,900), even as the line's shape suggests fewer, costlier visits rather than more visits overall. Across all 2,671 visits, total clinical cost reached $927,492.05, averaging $347.25 per visit.
+Finding 2	Hypertension, asthma, and diabetes dominate diagnoses. These three conditions account for the top visit volumes (420, 411, and 389 respectively) in the Clinical Overview dashboard, well ahead of migraine (311) and bronchitis (303) — suggesting chronic condition management is the primary clinical workload.
+Finding 3	The Wellness & Engagement dashboard logged 49,776 total activities averaging 67.5 minutes each, with 40.3% rated "Good." However, activity volume over time slides from 4,343 in the earliest month to roughly 3,812 by the latest, a decline of about 12%.
+Finding 4	Doctor workload is uneven across specialties. Neurology (7.0) and Cardiology (6.0) carry the highest headcount-to-visit ratios, while Endocrinology (3.0) is comparatively understaffed.
+Finding 5	Visit frequency and cost move together, and both have a weak negative link to health score — not insurance type. The correlation analysis on the Patient & Doctor dashboard shows visit frequency and clinical cost are strongly associated with each other (r = 0.937), while each has only a weak negative relationship with health score (r = -0.352 for cost, r = -0.258 for visits). In other words, patients who visit more often also tend to spend more
+Recommendation	"Staff around actual demand. Put more resources behind the highest-volume diagnoses (hypertension, asthma, diabetes) and the specialties carrying the heaviest caseloads (Neurology, Cardiology), while reviewing whether Endocrinology is understaffed relative to demand.
+Target wellness outreach using utilization patterns, not insurance type. Patients with rising visits and cost are the ones showing early signs of declining health 
+Reverse the drop in wellness activity. Engagement has fallen about 12% over the period tracked. Re-engagement efforts should focus first on patients already flagged as high-utilization, since they have the most to gain from staying active."
+
+
+
