@@ -9,10 +9,14 @@ Patient volume
 End-to-end healthcare analytics solution transforming raw clinical data into actionable insights using Excel, Power Query, Power Pivot, DAX, and interactive dashboards. Features data cleaning, KPI development, trend analysis, dynamic reporting, and data-driven performance insights.
 
 Data Dictionary- Doctors Dataset
-dColumn	Type	Definition	Analytical Role
-doctor_id	String	Unique identifier for each doctor.	Primary Key / Relationship Key
-doctor_name	String	Doctor's full professional name.	Doctor identification & reporting
-specialty	Categorical	Doctor's medical specialty.	Segmentation & comparative analysis
+* Doctor-level visit volume analysis
+* Clinical cost analysis by doctor
+* Performance comparison across specialties
+* Top doctors by patient/visit volume
+* Specialty-level healthcare trends
+* Interactive dashboard filtering using doctor slicers
+
+> **Data Governance Note:** `doctor_id` should remain stable and unique because it functions as the primary key for the doctor dimension and as a foreign key in related clinical datasets.
 
 Data Dictionary- Patient_Mapping Dataset
 Field Name	Data Type	Description	Example	Business / Analytical Purpose
