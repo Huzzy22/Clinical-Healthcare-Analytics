@@ -8,8 +8,6 @@ This project focuses on analyzing clinical visit data to provide meaningful insi
 Patient volume
 End-to-end healthcare analytics solution transforming raw clinical data into actionable insights using Excel, Power Query, Power Pivot, DAX, and interactive dashboards. Features data cleaning, KPI development, trend analysis, dynamic reporting, and data-driven performance insights.
 
-Data Dictionary- Doctors Dataset
-Here is a **GitHub README-ready Markdown** version you can paste directly into your repository:
 
 ## 📋 Data Dictionary — Doctor Dataset
 
@@ -50,15 +48,68 @@ This dataset supports:
 > **Data Governance Note:** `doctor_id` should remain stable and unique because it functions as the primary key for the doctor dimension and as a foreign key in related clinical datasets.
 
 
-Data Dictionary- Patient_Mapping Dataset
-Field Name	Data Type	Description	Example	Business / Analytical Purpose
-patient_id	Text / String	Unique identifier assigned to each patient.	P2503	Serves as the unique patient key and links patient records to clinical visits, treatments, and other healthcare data.
-patient_name	Text / String	Full name of the patient.	Maurice Habyarimana	Identifies the patient for administrative and reporting purposes.
-health_score	Integer / Numeric	Numerical score representing the patient's recorded health status.	89	Used to assess and analyze overall patient health levels and identify patterns across demographic or clinical groups.
-insurance_type	Text / Categorical	Type of health insurance or coverage associated with the patient.	Private	Enables analysis of patient coverage, insurance distribution, and healthcare utilization by insurance category.
-primary_care_physician_id	Text / String	Unique identifier of the physician designated as the patient's primary care physician.	DOC0020	Establishes the relationship between patients and their primary care physicians and supports physician-level analysis.
-blood_type	Text / Categorical	Patient's recorded blood group and Rh factor.	A+	Supports clinical classification and healthcare analysis where blood-group information is relevant.
-city	Text / Categorical	City where the patient is recorded as residing or receiving care.	Gisenyi	Enables geographic analysis of patient distribution, healthcare utilization, and clinical trends.
+## 📋 Data Dictionary — Patient_Mapping Dataset
+
+The **Clinical Visits Dataset** contains transactional records of patient healthcare encounters. Each row represents a clinical visit and captures key demographic, diagnostic, treatment, physician, date/time, and cost information. This dataset serves as the primary **fact table (`Fact_Clinical_Visits`)** for healthcare analytics and dashboard reporting.
+
+### Data Dictionary
+
+| Field Name       | Data Type          | Description                                                                   | Example      | Analytical Purpose                                                                                   |
+| ---------------- | ------------------ | ----------------------------------------------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------- |
+| `patient_id`     | String             | Unique identifier assigned to the patient associated with the clinical visit. | `P2831`      | Links each visit to the patient dimension and supports patient-level utilization analysis.           |
+| `visit_date`     | Date               | Calendar date on which the clinical visit occurred.                           | `16/05/2010` | Supports time-series analysis, monthly/annual trends, and date-based dashboard filtering.            |
+| `visit_time`     | Time               | Time at which the clinical visit was recorded.                                | `15:57:06`   | Enables analysis of healthcare utilization by time of day.                                           |
+| `age`            | Integer            | Age of the patient at the time of the recorded visit.                         | `39`         | Supports demographic segmentation and analysis of healthcare utilization across age groups.          |
+| `gender`         | Categorical        | Gender recorded for the patient.                                              | `F`          | Enables comparison of visit volumes, diagnoses, and costs across gender categories.                  |
+| `diagnosis`      | Categorical        | Primary medical condition or diagnosis associated with the clinical visit.    | `Migraine`   | Supports diagnosis prevalence, visit-volume, treatment, and cost analysis.                           |
+| `cost`           | Decimal / Currency | Clinical cost associated with the recorded patient visit.                     | `63.05`      | Used to calculate total clinical cost, average cost per visit, and cost trends.                      |
+| `doctor_id`      | String             | Unique identifier of the doctor responsible for the clinical visit.           | `DOC0002`    | Links visits to the doctor dimension and supports physician-level workload and performance analysis. |
+| `treatment_type` | Categorical        | Type of healthcare service or treatment provided during the visit.            | `Emergency`  | Enables comparison of healthcare utilization and costs across treatment categories.                  |
+
+### 🔑 Data Model Role
+
+* **Table Name:** `Fact_Clinical_Visits`
+* **Table Type:** Fact / Transactional Table
+* **Primary Transaction:** Clinical Patient Visit
+* **Patient Relationship:** `patient_id` → `Dim_Patient[patient_id]`
+* **Doctor Relationship:** `doctor_id` → `Dim_Doctor[doctor_id]`
+* **Date Relationship:** `visit_date` → `Dim_Calendar[date]`
+
+### 🧹 Data Quality Considerations
+
+| Field            | Data Quality Consideration                         | Recommended Treatment                                                                                                                    |
+| ---------------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `patient_id`     | Alphanumeric identifiers such as `P2831`.          | Store as **Text** and validate against the patient dimension.                                                                            |
+| `visit_date`     | Dates are provided in `DD/MM/YYYY` format.         | Convert to a proper **Date** data type in Power Query.                                                                                   |
+| `visit_time`     | Time values include hours, minutes, and seconds.   | Store as **Time** and validate the time format.                                                                                          |
+| `age`            | Numeric age values.                                | Store as **Whole Number** and validate against reasonable age boundaries.                                                                |
+| `gender`         | Values such as `F` and `M` are abbreviated.        | Standardize to `Female` and `Male` for user-friendly reporting where appropriate.                                                        |
+| `diagnosis`      | Medical diagnosis is categorical.                  | Standardize spelling, capitalization, and naming conventions.                                                                            |
+| `cost`           | Contains decimal values and some records with `0`. | Store as **Decimal/Currency**. Investigate whether zero represents a genuine zero charge, waived cost, coverage, or missing information. |
+| `doctor_id`      | Alphanumeric physician identifiers.                | Store as **Text** and validate against `Dim_Doctor[doctor_id]`.                                                                          |
+| `treatment_type` | Categorical treatment classifications.             | Standardize categories such as `Checkup`, `Outpatient`, and `Emergency`.                                                                 |
+
+### 📊 Key Analytical Metrics
+
+This dataset supports the development of key healthcare KPIs, including:
+
+* **Total Visits**
+* **Total Clinical Cost**
+* **Average Cost per Visit**
+* **Distinct Patients**
+* **Visits by Diagnosis**
+* **Visits by Treatment Type**
+* **Clinical Cost Trend by Month**
+* **Top Doctors by Visit Volume**
+* **Clinical Cost by Doctor**
+* **Clinical Cost by Diagnosis**
+* **Visits by Gender and Age Group**
+
+### 🎯 Analytical Purpose
+
+The dataset provides the transactional foundation for analyzing **patient utilization, clinical activity, treatment patterns, physician performance, and healthcare costs**. When integrated with the patient, doctor, wellness, and calendar dimensions, it enables an interactive **Power Pivot healthcare analytics model and dashboard** for data-driven decision-making.
+
+> **Data Governance Note:** `patient_id`, `doctor_id`, and `visit_date` should be maintained as reliable relationship keys to ensure accurate filtering, aggregation, and KPI calculations throughout the Power Pivot data model.
 
 Data Dictionary- Patient_records_fact Dataset
 
