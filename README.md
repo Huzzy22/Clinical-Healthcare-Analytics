@@ -9,6 +9,37 @@ Patient volume
 End-to-end healthcare analytics solution transforming raw clinical data into actionable insights using Excel, Power Query, Power Pivot, DAX, and interactive dashboards. Features data cleaning, KPI development, trend analysis, dynamic reporting, and data-driven performance insights.
 
 Data Dictionary- Doctors Dataset
+Here is a **GitHub README-ready Markdown** version you can paste directly into your repository:
+
+## 📋 Data Dictionary — Doctor Dataset
+
+The **Doctor Dataset** contains reference information about healthcare providers, including their unique identifiers, names, and medical specialties. It serves as a **doctor dimension table (`Dim_Doctor`)** for linking physician information to clinical visit records and supporting provider-level healthcare analytics.
+
+| Field Name    | Data Type   | Description                                                    | Example                  | Analytical Purpose                                                                                        |
+| ------------- | ----------- | -------------------------------------------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------- |
+| `doctor_id`   | String      | Unique identifier assigned to each doctor.                     | `DOC0009`                | Serves as the primary key and establishes relationships with clinical visit and patient-related datasets. |
+| `doctor_name` | String      | Full name of the doctor, including professional title.         | `Dr.Benjamin Manirakiza` | Identifies healthcare providers for reporting, filtering, and physician-level analysis.                   |
+| `specialty`   | Categorical | Medical specialty or area of clinical expertise of the doctor. | `Cardiology`             | Enables analysis of clinical activity, patient visits, costs, and performance by medical specialty.       |
+
+### 🔑 Data Model Role
+
+* **Table Name:** `Dim_Doctor`
+* **Primary Key:** `doctor_id`
+* **Relationship:** `doctor_id` → `Fact_Clinical_Visits[doctor_id]`
+* **Table Type:** Dimension / Reference Table
+
+### 🧹 Data Quality Considerations
+
+| Field         | Data Quality Consideration                                            | Recommended Treatment                                                  |
+| ------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `doctor_id`   | Contains alphanumeric identifiers with leading zeros.                 | Store as **Text** and ensure every ID is unique.                       |
+| `doctor_name` | Some records contain inconsistent spacing and capitalization.         | Apply **Trim, Clean, and Proper Case** transformations in Power Query. |
+| `specialty`   | Some values contain inconsistent spacing, e.g., `General   Practice`. | Standardize spacing and capitalization before analysis.                |
+
+### 📊 Analytical Use Cases
+
+This dataset supports:
+
 * Doctor-level visit volume analysis
 * Clinical cost analysis by doctor
 * Performance comparison across specialties
@@ -17,6 +48,7 @@ Data Dictionary- Doctors Dataset
 * Interactive dashboard filtering using doctor slicers
 
 > **Data Governance Note:** `doctor_id` should remain stable and unique because it functions as the primary key for the doctor dimension and as a foreign key in related clinical datasets.
+
 
 Data Dictionary- Patient_Mapping Dataset
 Field Name	Data Type	Description	Example	Business / Analytical Purpose
